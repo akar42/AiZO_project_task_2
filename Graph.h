@@ -43,4 +43,6 @@ public:
 	void generate_random_graph(double dencity, int new_vertex_amount);
 
 	void write_graph_from_edge_list(Edge* edge_list, int new_vertex_amount, int new_edge_amount);
+
+	~Graph();
 };

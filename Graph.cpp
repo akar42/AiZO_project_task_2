@@ -249,3 +249,20 @@ void Graph::write_graph_from_edge_list(Edge *edge_list, int new_vertex_amount, i
 		adjacency_list[edge_list[i].u] = tmp_adj;
 	}
 }
+
+Graph::~Graph()
+{
+	if (this->incidence_matrix != nullptr)
+	{
+		for (int i = 0; i < this->vertex_amount; i++)
+			delete[] this->incidence_matrix[i];
+		delete[] this->incidence_matrix;
+	}
+
+	if (this->adjacency_list != nullptr)
+	{
+		for (int i = 0; i < this->vertex_amount; i++)
+			delete[] this->adjacency_list[i];
+		delete[] this->adjacency_list;
+	}
+}
