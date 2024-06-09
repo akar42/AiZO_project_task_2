@@ -82,7 +82,7 @@ void Graph::generate_random_graph(double dencity, int new_vertex_amount)
 
 			edge_list[edge_list_size - 1].u = random_vertex;
 			edge_list[edge_list_size - 1].v = i;
-			edge_list[edge_list_size - 1].weight = rand() % MAX_EDGE_WEIGHT;
+			edge_list[edge_list_size - 1].weight = rand() % (MAX_EDGE_WEIGHT - 1) + 1;
 		}
 		else
 		{
@@ -96,7 +96,7 @@ void Graph::generate_random_graph(double dencity, int new_vertex_amount)
 
 			tmp[edge_list_size - 1].u = random_vertex;
 			tmp[edge_list_size - 1].v = i;
-			tmp[edge_list_size - 1].weight = rand() % MAX_EDGE_WEIGHT;
+			tmp[edge_list_size - 1].weight = rand() % (MAX_EDGE_WEIGHT - 1) + 1;
 
 			delete[] edge_list;
 
@@ -152,7 +152,7 @@ void Graph::generate_random_graph(double dencity, int new_vertex_amount)
 
 				tmp[edge_list_size - 1].u = u;
 				tmp[edge_list_size - 1].v = v;
-				tmp[edge_list_size - 1].weight = rand() % MAX_EDGE_WEIGHT;
+				tmp[edge_list_size - 1].weight = rand() % (MAX_EDGE_WEIGHT - 1) + 1;
 
 				delete[] edge_list;
 
@@ -247,6 +247,29 @@ void Graph::write_graph_from_edge_list(Edge *edge_list, int new_vertex_amount, i
 		delete[] adjacency_list[edge_list[i].u];
 
 		adjacency_list[edge_list[i].u] = tmp_adj;
+
+		if (!directed)
+		{
+			int tmp_size = 0;
+			while (adjacency_list[edge_list[i].v][tmp_size].index != -1)
+				tmp_size++;
+
+			Vertex *tmp_adj = new Vertex[tmp_size + 2];
+
+			for (int j = 0; j < tmp_size; j++)
+			{
+				tmp_adj[j] = adjacency_list[edge_list[i].v][j];
+			}
+
+			tmp_adj[tmp_size].index = edge_list[i].u;
+			tmp_adj[tmp_size].weight = edge_list[i].weight;
+
+			tmp_adj[tmp_size + 1].index = -1;
+
+			delete[] adjacency_list[edge_list[i].v];
+
+			adjacency_list[edge_list[i].v] = tmp_adj;
+		}
 	}
 }
 
