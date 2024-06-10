@@ -52,6 +52,31 @@ Vertex **Graph::get_adjacency_list()
 	}
 }
 
+int Graph::get_vertex_amount()
+{
+	return this->vertex_amount;
+}
+
+int Graph::get_edge_amount()
+{
+	return this->edge_amount;
+}
+
+Edge *Graph::get_edge_list()
+{
+	Edge* output = new Edge[edge_amount];
+	std::copy(this->edge_list, this->edge_list + edge_amount, output);
+	return output;
+}
+
+void Graph::set_is_directed(bool directed)
+{
+	this->directed = directed;
+	Edge* tmp = this->get_edge_list();
+	this->write_graph_from_edge_list(tmp, this->vertex_amount, this->edge_amount);
+	delete[] tmp;
+}
+
 void Graph::generate_random_graph(double dencity, int new_vertex_amount)
 {
 	srand(time(NULL));
@@ -188,8 +213,19 @@ void Graph::write_graph_from_edge_list(Edge *edge_list, int new_vertex_amount, i
 		delete[] this->adjacency_list;
 	}
 
+	if (this->edge_list != nullptr)
+	{
+		delete[] this->edge_list;
+	}
+
 	this->vertex_amount = new_vertex_amount;
 	this->edge_amount = new_edge_amount;
+	
+	this->edge_list = new Edge[this->edge_amount];
+	for (int i = 0; i < this->edge_amount; i++)
+	{
+		this->edge_list[i] = edge_list[i];
+	}
 
 	this->incidence_matrix = new int *[this->vertex_amount];
 
@@ -287,5 +323,10 @@ Graph::~Graph()
 		for (int i = 0; i < this->vertex_amount; i++)
 			delete[] this->adjacency_list[i];
 		delete[] this->adjacency_list;
+	}
+
+	if (this->edge_list != nullptr)
+	{
+		delete[] this->edge_list;
 	}
 }

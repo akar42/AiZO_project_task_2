@@ -29,6 +29,7 @@ class Graph
 public:
 	int** incidence_matrix = nullptr;
 	Vertex** adjacency_list = nullptr;
+	Edge* edge_list = nullptr;
 
 	int edge_amount = -1;
 	int vertex_amount = -1;
@@ -39,6 +40,14 @@ public:
 	int** get_incidence_matrix();
 
 	Vertex** get_adjacency_list();
+
+	int get_vertex_amount();
+
+	int get_edge_amount();
+
+	Edge* get_edge_list();
+
+	void set_is_directed(bool directed);
 
 	void generate_random_graph(double dencity, int new_vertex_amount);
 
