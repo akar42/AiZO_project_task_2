@@ -42,17 +42,17 @@ Vertex* AlgorithmsIM::PrimsMST(int **incidence_matrix, int vertex_amount, int ed
 		}
 	}
 
-	for (int i = 0; i < vertex_amount; i++)
-	{
-		std::cout << result[i].index << " - " << i << '\t' << result[i].weight << '\n';
-	}
-
 	return result;
 }
 
-int AlgorithmsIM::KruskalMST(int **incidence_matrix, int vertex_amount, int edge_amount, int start_vertex)
+Vertex* AlgorithmsIM::KruskalMST(int **incidence_matrix, int vertex_amount, int edge_amount)
 {
-	int mst_wt = 0;
+	Vertex* result = new Vertex[vertex_amount];
+
+	for (int i = 0; i < vertex_amount; i++)
+	{
+		result[i] = {-1, 0};
+	}
 
 	Edge* edge_list = new Edge[edge_amount];
 
@@ -91,7 +91,6 @@ int AlgorithmsIM::KruskalMST(int **incidence_matrix, int vertex_amount, int edge
 
 	DisjointSets disjoint_sets(vertex_amount);
 
-	std::cout << "Edges in MST:\n";
 	for (int i = 0; i < edge_amount; i++)
 	{
 		int u = edge_list[i].u;
@@ -102,15 +101,19 @@ int AlgorithmsIM::KruskalMST(int **incidence_matrix, int vertex_amount, int edge
 
 		if (set_u != set_v)
 		{
-			std::cout << u << " - " << v << " \t" << edge_list[i].weight << " \n";
-			mst_wt += edge_list[i].weight;
+			if (result[v].index == -1)
+			{
+				result[v].index = u;
+				result[v].weight = edge_list[i].weight;
+			} else {
+				result[u].index = v;
+				result[u].weight = edge_list[i].weight;
+			}
 			disjoint_sets.merge(set_u, set_v);
 		}
 	}
 
-	std::cout << "Minimum Spanning Tree weight: " << mst_wt << "\n";
-
-	return mst_wt;
+	return result;
 }
 
 Vertex* AlgorithmsIM::DijkstryPath(int **incidence_matrix, int vertex_amount, int edge_amount, int start_vertex)
@@ -134,8 +137,6 @@ Vertex* AlgorithmsIM::DijkstryPath(int **incidence_matrix, int vertex_amount, in
 		Vertex u = q.get_min();
 		q.pop();
 
-		std::cout << "u: " << u.index << '\n';
-
 		for (int v_id = 0; v_id < vertex_amount; v_id++)
 		{
 			if (v_id == u.index)
@@ -155,11 +156,6 @@ Vertex* AlgorithmsIM::DijkstryPath(int **incidence_matrix, int vertex_amount, in
 				}
 			}
 		}
-	}
-
-	for (int i = 0; i < vertex_amount; i++)
-	{
-		std::cout << result[i].index << " - " << i << '\t' << result[i].weight << '\n';
 	}
 
 	return result;

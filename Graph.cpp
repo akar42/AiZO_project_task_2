@@ -2,7 +2,6 @@
 
 Graph::Graph(int edge_amount, int vertex_amount, bool directed)
 {
-	std::cout << MAX_EDGE_WEIGHT << '\n';
 	this->edge_amount = edge_amount;
 	this->vertex_amount = vertex_amount;
 	this->directed = directed;
@@ -184,11 +183,6 @@ void Graph::generate_random_graph(double dencity, int new_vertex_amount)
 				edge_list = tmp;
 			}
 		}
-	}
-
-	for (int i = 0; i < new_edge_amount; i++)
-	{
-		std::cout << edge_list[i].u << '\t' << edge_list[i].v << '\t' << edge_list[i].weight << '\n';
 	}
 
 	this->write_graph_from_edge_list(edge_list, new_vertex_amount, new_edge_amount);

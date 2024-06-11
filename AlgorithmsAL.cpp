@@ -34,17 +34,17 @@ Vertex *AlgorithmsAL::PrimsMST(Vertex **adjacency_list, int vertex_amount, int e
 		}
 	}
 
-	for (int i = 0; i < vertex_amount; i++)
-	{
-		std::cout << result[i].index << " - " << i << '\t' << result[i].weight << '\n';
-	}
-
 	return result;
 }
 
-int AlgorithmsAL::KruskalMST(Vertex **adjacency_list, int vertex_amount, int edge_amount, int start_vertex)
+Vertex* AlgorithmsAL::KruskalMST(Vertex **adjacency_list, int vertex_amount, int edge_amount)
 {
-	int mst_wt = 0;
+	Vertex* result = new Vertex[vertex_amount];
+
+	for (int i = 0; i < vertex_amount; i++)
+	{
+		result[i] = {-1, 0};
+	}
 
 	int edge_list_size = 0;
 	Edge* edge_list = nullptr;
@@ -91,7 +91,6 @@ int AlgorithmsAL::KruskalMST(Vertex **adjacency_list, int vertex_amount, int edg
 
 	DisjointSets disjoint_sets(vertex_amount);
 
-	std::cout << "Edges in MST:\n";
 	for (int i = 0; i < edge_amount; i++)
 	{
 		int u = edge_list[i].u;
@@ -102,15 +101,19 @@ int AlgorithmsAL::KruskalMST(Vertex **adjacency_list, int vertex_amount, int edg
 
 		if (set_u != set_v)
 		{
-			std::cout << u << " - " << v << " \t" << edge_list[i].weight << " \n";
-			mst_wt += edge_list[i].weight;
+			if (result[v].index == -1)
+			{
+				result[v].index = u;
+				result[v].weight = edge_list[i].weight;
+			} else {
+				result[u].index = v;
+				result[u].weight = edge_list[i].weight;
+			}
 			disjoint_sets.merge(set_u, set_v);
 		}
 	}
 
-	std::cout << "Minimum Spanning Tree weight: " << mst_wt << "\n";
-
-	return mst_wt;
+	return result;
 }
 
 Vertex *AlgorithmsAL::DijkstryPath(Vertex **adjacency_list, int vertex_amount, int edge_amount, int start_vertex)
@@ -145,11 +148,6 @@ Vertex *AlgorithmsAL::DijkstryPath(Vertex **adjacency_list, int vertex_amount, i
 				q.change_key(v_id, weight);
 			}
 		}
-	}
-
-	for (int i = 0; i < vertex_amount; i++)
-	{
-		std::cout << result[i].index << " - " << i << '\t' << result[i].weight << '\n';
 	}
 
 	return result;

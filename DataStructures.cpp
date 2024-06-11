@@ -116,7 +116,6 @@ void VertexPriorityQueue::pop()
 		for(int i = 0; i < this->size; i++)
 		{
 			tmp[i] = this->min_heap[i];
-			// std::cout << tmp[i].index << '\t' << tmp[i].weight << '\n';
 		}
 
 		delete[] this->min_heap;
@@ -124,14 +123,6 @@ void VertexPriorityQueue::pop()
 		this->min_heap = tmp;
 
 		adjustForHeap(0, this->size);
-
-		// std::cout << "Queue after pop" << '\n';
-		// for (int i = 0; i < this->size; i++)
-		// {
-		// 	std::cout << this->min_heap[i].index << '\t' << this->min_heap[i].weight << '\n';
-		// }
-		
-
 	}
 }
 
