@@ -116,7 +116,7 @@ Vertex* AlgorithmsAL::KruskalMST(Vertex **adjacency_list, int vertex_amount, int
 	return result;
 }
 
-Vertex *AlgorithmsAL::DijkstryPath(Vertex **adjacency_list, int vertex_amount, int edge_amount, int start_vertex)
+Vertex *AlgorithmsAL::DijkstraPath(Vertex **adjacency_list, int vertex_amount, int edge_amount, int start_vertex)
 {
 	Vertex* result = new Vertex[vertex_amount];
 

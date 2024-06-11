@@ -116,7 +116,7 @@ Vertex* AlgorithmsIM::KruskalMST(int **incidence_matrix, int vertex_amount, int 
 	return result;
 }
 
-Vertex* AlgorithmsIM::DijkstryPath(int **incidence_matrix, int vertex_amount, int edge_amount, int start_vertex)
+Vertex* AlgorithmsIM::DijkstraPath(int **incidence_matrix, int vertex_amount, int edge_amount, int start_vertex)
 {
 	Vertex* result = new Vertex[vertex_amount];
 
