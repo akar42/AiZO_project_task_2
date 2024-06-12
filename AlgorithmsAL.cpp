@@ -113,6 +113,8 @@ Vertex* AlgorithmsAL::KruskalMST(Vertex **adjacency_list, int vertex_amount, int
 		}
 	}
 
+	delete[] edge_list;
+
 	return result;
 }
 

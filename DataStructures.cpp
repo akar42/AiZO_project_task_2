@@ -259,6 +259,7 @@ void mergeSortEdges(Edge *arr, int l, int r)
 	if (l < r)
 	{
 		int m = l + (r - l) / 2;
+		// std::cout << "l: " << l << " m: " << m <<" r: " << r << '\n';
 		mergeSortEdges(arr, l, m);
 		mergeSortEdges(arr, m + 1, r);
 		mergeEdgeArrays(arr, l, m, r);

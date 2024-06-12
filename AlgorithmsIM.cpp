@@ -113,6 +113,8 @@ Vertex* AlgorithmsIM::KruskalMST(int **incidence_matrix, int vertex_amount, int 
 		}
 	}
 
+	delete[] edge_list;
+
 	return result;
 }
 
