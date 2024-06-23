@@ -192,8 +192,11 @@ int main()
 					mst = alg_al.KruskalMST(adjacency_list, vertex_amount, edge_amount);
 				}
 
+				cout << "Edges of MST:" << '\n';
+
 				for (int i = 0; i < vertex_amount; i++)
 				{
+					cout << mst[i].index << " - " << i << ": " << mst[i].weight << '\n';
 					mst_weight += mst[i].weight;
 				}
 
@@ -249,8 +252,14 @@ int main()
 
 				
 				int i = last_vertex;
+				bool exist = true;
 				while (i != start_vertex)
 				{
+					if (ancestor_list[i].weight == 200)
+					{
+						exist = false;
+						break;
+					}
 					shortest_path[shortest_path_length - 1] = i;
 					shortest_path_length++;
 					int* tmp = new int[shortest_path_length];
@@ -267,15 +276,20 @@ int main()
 				}
 				shortest_path[shortest_path_length - 1] = start_vertex;
 
-				cout << "Shortest path: ";
-				for (int j = shortest_path_length - 1; j >= 0; j--)
-				{
-					cout << shortest_path[j] << '\t';
+				if (exist) {
+					cout << "Shortest path: ";
+					for (int j = shortest_path_length - 1; j >= 0; j--)
+					{
+						cout << shortest_path[j] << '\t';
+					}
+					cout << '\n';
+
+					cout << "Path's weight: " << ancestor_list[last_vertex].weight << '\n';
 				}
-				cout << '\n';
-
-				cout << "Path's weight: " << ancestor_list[last_vertex].weight << '\n';
-
+				else
+				{
+					cout << "Path does not exist" << '\n';
+				}
 				delete[] ancestor_list;
 				delete[] shortest_path;
 			}
